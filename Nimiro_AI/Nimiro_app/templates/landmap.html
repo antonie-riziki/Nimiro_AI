@@ -1,0 +1,354 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Nimiro AI Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2D4F35", // Deep Earthy Green
+                        secondary: "#9BC53D", // Fresh Leaf Green
+                        accent: "#FFB800", // Sun Gold
+                        "background-light": "#F8F9FA",
+                        "background-dark": "#121212",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1E1E1E",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "16px",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .map-gradient {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, rgba(246, 248, 246, 1) 100%);
+        }
+
+        .polygon-overlay {
+            background: rgba(73, 236, 19, 0.2);
+            border: 2px solid #49ec13;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased transition-colors duration-300">
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Desktop Sidebar -->
+        {% include 'sidebar.html' %}
+
+        <!-- Main Content Wrapper -->
+        <div class="flex flex-col flex-1 overflow-hidden relative">
+
+            <!-- Mobile Header & Desktop Topbar -->
+            <div
+                class="flex items-center bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-4 md:px-8 py-3 md:py-4 border-b border-slate-100 dark:border-slate-800 shrink-0 z-40 sticky top-0">
+                <button
+                    class="md:hidden flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-icons-round text-slate-600 dark:text-slate-300">arrow_back_ios_new</span>
+                </button>
+                <div class="flex-1 md:flex-initial text-center md:text-left">
+                    <h1 class="text-lg md:text-xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
+                        Interactive Land Map</h1>
+                    <p class="text-[10px] md:text-xs uppercase tracking-widest text-slate-500 font-semibold">Plot ID:
+                        #KF-8821</p>
+                </div>
+
+                <!-- Desktop controls -->
+                <div class="hidden md:flex ml-auto items-center gap-3">
+                    <button
+                        class="bg-primary text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md hover:bg-primary/90 transition-colors">Generate
+                        Report</button>
+                    <button
+                        class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                        <span class="material-icons-round">layers</span>
+                    </button>
+                </div>
+
+                <!-- Mobile controls -->
+                <button
+                    class="md:hidden flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-icons-round text-slate-600 dark:text-slate-300">layers</span>
+                </button>
+            </div>
+
+            <!-- Main Map Area (Desktop/Mobile unified) -->
+            <div class="relative flex-1 bg-slate-200 dark:bg-slate-900 overflow-hidden">
+                <!-- Leaflet Map Container -->
+                <div id="interactiveMap" class="absolute inset-0 z-0 text-slate-900 border-none outline-none"></div>
+
+                <!-- Search Overlay -->
+                <div class="absolute top-4 left-4 right-4 md:right-auto md:w-96 z-10">
+                    <label
+                        class="flex items-center bg-white/95 dark:bg-slate-800/95 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 px-4 py-2.5 md:py-3 gap-3 transition-colors focus-within:border-primary/50 focus-within:shadow-primary/10">
+                        <span class="material-icons-round text-slate-400">search</span>
+                        <input
+                            class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-slate-400 dark:text-slate-100 outline-none"
+                            placeholder="Search coordinates or plot ID" type="text" />
+                        <span
+                            class="material-icons-round text-primary cursor-pointer hover:text-primary/80 transition-colors">my_location</span>
+                    </label>
+                </div>
+
+                <!-- Desktop Summary Panel Overlay -->
+                <div
+                    class="hidden lg:flex absolute right-6 top-6 bottom-6 w-80 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 shadow-2xl rounded-3xl z-20 flex-col overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 dark:border-slate-800">
+                        <div class="flex justify-between items-start mb-2">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-slate-50">Plot Details</h2>
+                            <span
+                                class="px-3 py-1 bg-primary/20 text-primary text-[10px] uppercase font-bold tracking-widest rounded-full border border-primary/30">Healthy</span>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium">Synced: Just now</p>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto p-6 space-y-4 no-scrollbar">
+                        <div
+                            class="bg-background-light dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-primary/30 transition-colors cursor-default">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="material-icons-round text-slate-400 text-sm">square_foot</span>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Total
+                                    Area</span>
+                            </div>
+                            <p class="text-2xl font-bold text-slate-900 dark:text-slate-50">12.4 <span
+                                    class="text-sm font-medium text-slate-500">Acres</span></p>
+                        </div>
+                        <div
+                            class="bg-background-light dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-primary/30 transition-colors cursor-default">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="material-icons-round text-slate-400 text-sm">grass</span>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Active
+                                    Crop</span>
+                            </div>
+                            <p class="text-xl font-bold text-slate-900 dark:text-slate-50">Yellow Corn</p>
+                            <div class="mt-2 w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-primary h-full w-[40%] rounded-full"></div>
+                            </div>
+                            <p class="text-[10px] font-bold text-slate-400 mt-1 uppercase text-right">Vegetative Stage
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/20">
+                        <button
+                            class="w-full bg-primary text-white font-bold py-3 rounded-xl hover:bg-primary/90 transition-colors flex justify-center items-center gap-2">
+                            <span class="material-icons-round text-sm">edit_location_alt</span> Define Boundary
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Map Controls -->
+                <div
+                    class="absolute right-4 md:right-[360px] lg:right-[360px] bottom-36 md:bottom-8 flex flex-col gap-2 z-10 transition-all">
+                    <div
+                        class="flex flex-col bg-white/95 dark:bg-slate-800/95 backdrop-blur-md rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <button id="zoomInMapBtn"
+                            class="p-3 md:p-4 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors border-b border-slate-100 dark:border-slate-700 group">
+                            <span
+                                class="material-icons-round text-slate-600 dark:text-slate-300 group-hover:text-primary transition-colors">add</span>
+                        </button>
+                        <button id="zoomOutMapBtn"
+                            class="p-3 md:p-4 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors group">
+                            <span
+                                class="material-icons-round text-slate-600 dark:text-slate-300 group-hover:text-primary transition-colors">remove</span>
+                        </button>
+                    </div>
+                    <button id="recenterMapBtn"
+                        class="bg-primary hover:bg-primary/90 p-3 md:p-4 rounded-2xl shadow-[0_0_20px_rgba(45,79,53,0.3)] text-white flex items-center justify-center transition-colors">
+                        <span class="material-icons-round font-bold">navigation</span>
+                    </button>
+                </div>
+
+                <!-- Layer Toggles -->
+                <div class="absolute left-4 bottom-36 md:bottom-8 flex flex-col gap-2.5 z-10 hidden sm:flex">
+                    <button
+                        class="flex items-center gap-2 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md pl-2 pr-4 py-2.5 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 group transition-all hover:border-primary/50">
+                        <div
+                            class="size-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-active:scale-95 transition-transform">
+                            <span class="material-icons-round text-lg">water_drop</span>
+                        </div>
+                        <span class="text-xs font-semibold text-slate-700 dark:text-slate-200 md:text-sm">Irrigation
+                            Grid</span>
+                        <div class="w-8 h-4 md:w-10 md:h-5 bg-primary rounded-full relative ml-4 shadow-inner">
+                            <div
+                                class="absolute right-1 top-[2px] md:top-[3px] size-3 md:size-3.5 bg-white rounded-full shadow-sm">
+                            </div>
+                        </div>
+                    </button>
+                    <button
+                        class="flex items-center gap-2 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md pl-2 pr-4 py-2.5 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 group transition-all hover:border-orange-500/50">
+                        <div
+                            class="size-8 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-600 group-active:scale-95 transition-transform">
+                            <span class="material-icons-round text-lg">bug_report</span>
+                        </div>
+                        <span class="text-xs font-semibold text-slate-700 dark:text-slate-200 md:text-sm">Pest
+                            Alerts</span>
+                        <div
+                            class="w-8 h-4 md:w-10 md:h-5 bg-slate-300 dark:bg-slate-600/50 rounded-full relative ml-4 shadow-inner border border-black/5 dark:border-white/5">
+                            <div
+                                class="absolute left-1 top-[2px] md:top-[3px] size-3 md:size-3.5 bg-white dark:bg-slate-400 rounded-full shadow-sm">
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Plot Details Sheet (Persistent on Mobile only) -->
+            <div
+                class="lg:hidden bg-white dark:bg-slate-900 rounded-t-3xl shadow-[0_-10px_30px_-15px_rgba(0,0,0,0.3)] z-20 shrink-0">
+                <div class="flex h-1.5 w-12 mx-auto mt-3 rounded-full bg-slate-200 dark:bg-slate-700/50"></div>
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-slate-50">Plot Summary</h2>
+                            <p class="text-xs text-slate-500 font-medium tracking-wide">Updated 2h ago</p>
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-lg border border-primary/20">Healthy</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div
+                            class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-700">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="material-icons-round text-slate-400 text-sm">square_foot</span>
+                                <span
+                                    class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Acreage</span>
+                            </div>
+                            <p class="text-lg md:text-xl font-bold text-slate-900 dark:text-slate-50">12.4 <span
+                                    class="text-sm md:text-base font-medium text-slate-400">Ac</span></p>
+                        </div>
+                        <div
+                            class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-700">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="material-icons-round text-slate-400 text-sm">grass</span>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Crop</span>
+                            </div>
+                            <p class="text-lg md:text-xl font-bold text-slate-900 dark:text-slate-50">Corn</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation Bar (Mobile only via utility classes inside template) -->
+            {% include 'bottom_nav.html' %}
+        </div>
+    </div>
+
+    <!-- Leaflet Configuration Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var mapContainer = document.getElementById('interactiveMap');
+            if (mapContainer) {
+                var centerCoordinates = [-0.3031, 36.0800];
+                var landMap = L.map('interactiveMap', {
+                    zoomControl: false, // We'll use our custom floating buttons
+                    scrollWheelZoom: true
+                }).setView(centerCoordinates, 16);
+
+                // Add real-world satellite imagery
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                    attribution: 'Tiles &copy; Esri',
+                    maxZoom: 19
+                }).addTo(landMap);
+
+                // Add interactive Plot Boundaries using your brand colors
+                var plotBounds = [
+                    [-0.3015, 36.0785],
+                    [-0.3018, 36.0820],
+                    [-0.3045, 36.0815],
+                    [-0.3040, 36.0780]
+                ];
+
+                var polygon = L.polygon(plotBounds, {
+                    color: '#9BC53D',
+                    weight: 3,
+                    opacity: 0.9,
+                    fillColor: '#2D4F35',
+                    fillOpacity: 0.4,
+                    dashArray: '6, 6'
+                }).addTo(landMap);
+
+                landMap.fitBounds(polygon.getBounds(), { padding: [40, 40] });
+
+                // Custom control buttons bindings
+                document.getElementById('zoomInMapBtn').addEventListener('click', function () {
+                    landMap.zoomIn();
+                });
+
+                document.getElementById('zoomOutMapBtn').addEventListener('click', function () {
+                    landMap.zoomOut();
+                });
+
+                document.getElementById('recenterMapBtn').addEventListener('click', function () {
+                    landMap.flyToBounds(polygon.getBounds(), { padding: [40, 40], duration: 1.5 });
+                });
+
+                // Add Soil Sensor Interactive Marker
+                var sensorMarker = L.circleMarker([-0.3035, 36.0795], {
+                    radius: 8,
+                    fillColor: '#3b82f6',
+                    color: '#ffffff',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 1
+                }).addTo(landMap);
+
+                sensorMarker.bindPopup(`
+                    <div class="text-center font-display" style="font-family: 'Inter', sans-serif;">
+                        <b class="text-slate-500 text-[10px] uppercase block mb-0.5">Soil Node A</b>
+                        <span class="text-blue-600 font-bold text-sm">Moisture: 42%</span>
+                    </div>
+                `);
+
+                // Add Crop Data Interactive Marker
+                var cropMarker = L.circleMarker([-0.3025, 36.0805], {
+                    radius: 8,
+                    fillColor: '#FFB800', // Sun Gold accent
+                    color: '#ffffff',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 1
+                }).addTo(landMap);
+
+                cropMarker.bindPopup(`
+                    <div class="text-center font-display" style="font-family: 'Inter', sans-serif;">
+                        <b class="text-slate-800 text-sm block mb-0.5">Corn Field A</b>
+                        <span class="text-yellow-600 font-bold text-[11px]">Vegetative Stage &middot; 12.4 Ac</span>
+                    </div>
+                `);
+            }
+        });
+    </script>
+</body>
+
+</html>

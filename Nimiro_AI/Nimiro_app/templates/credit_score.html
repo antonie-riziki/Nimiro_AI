@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2D4B37", // Earthy Dark Green from the reference
+                        secondary: "#D4E5B2", // Light leafy green
+                        accent: "#F2C94C", // Earthy yellow
+                        "background-light": "#F9FAF7",
+                        "background-dark": "#121814",
+                    },
+                    fontFamily: {
+                        display: ["Plus Jakarta Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "12px",
+                    },
+                },
+            },
+        }
+    </script>
+    <title>Market &amp; Credit Intelligence</title>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased transition-colors duration-300">
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Desktop Sidebar -->
+        {% include 'sidebar.html' %}
+
+        <!-- Main Content Wrapper -->
+        <div class="flex flex-col flex-1 overflow-hidden relative">
+
+            <!-- Mobile Header & Desktop Topbar -->
+            <div
+                class="flex items-center bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-4 md:px-8 py-3 md:py-4 border-b border-slate-100 dark:border-slate-800 shrink-0 z-40 sticky top-0">
+                <button
+                    class="md:hidden flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-icons-round text-slate-600 dark:text-slate-300">arrow_back_ios_new</span>
+                </button>
+                <div class="flex-1 md:flex-initial text-center md:text-left">
+                    <h1 class="text-lg md:text-xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Credit
+                        Score</h1>
+                    <p class="text-[10px] md:text-xs uppercase tracking-widest text-slate-500 font-semibold">Financial
+                        Overview</p>
+                </div>
+
+                <!-- Desktop controls -->
+                <div class="hidden md:flex ml-auto items-center gap-3">
+                    <button
+                        class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                        <span class="material-icons-round">notifications</span>
+                    </button>
+                </div>
+
+                <!-- Mobile controls -->
+                <button
+                    class="md:hidden flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-icons-round text-slate-600 dark:text-slate-300">notifications</span>
+                </button>
+            </div>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto w-full max-w-7xl mx-auto p-4 md:p-8 space-y-6 pb-24 md:pb-8">
+
+                <!-- Credit Risk Score Header Card -->
+                <section
+                    class="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-800">
+                    <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+                        <!-- Score Circle -->
+                        <div class="relative flex items-center justify-center shrink-0">
+                            <svg class="w-48 h-48 md:w-56 md:h-56 transform -rotate-90" viewBox="0 0 200 200">
+                                <!-- Background Track -->
+                                <circle class="text-slate-100 dark:text-slate-800" cx="100" cy="100" r="80"
+                                    fill="transparent" stroke="currentColor" stroke-width="18"></circle>
+                                <!-- Progress Bar -->
+                                <circle class="text-primary" cx="100" cy="100" r="80" fill="transparent"
+                                    stroke="currentColor" stroke-width="18" stroke-linecap="round"
+                                    stroke-dasharray="502.65" stroke-dashoffset="74"></circle>
+                            </svg>
+                            <!-- Score Label -->
+                            <div class="absolute flex flex-col items-center justify-center text-center">
+                                <span
+                                    class="text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white mt-1">725</span>
+                                <span
+                                    class="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">out
+                                    of 850</span>
+                            </div>
+                        </div>
+
+                        <!-- Info & Tags -->
+                        <div class="flex-1 flex flex-col justify-center text-center md:text-left pt-4 md:pt-8">
+                            <h3
+                                class="text-lg md:text-xl font-medium text-slate-600 dark:text-slate-300 mb-4 max-w-2xl">
+                                Your credit score qualifies you for agricultural loans and insurance products from
+                                multiple providers.
+                            </h3>
+                            <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                                <span
+                                    class="bg-secondary/20 text-primary px-4 py-1.5 rounded-full text-sm font-bold border border-secondary/30">
+                                    5 Providers Available
+                                </span>
+                                <span
+                                    class="bg-secondary/20 text-primary px-4 py-1.5 rounded-full text-sm font-bold border border-secondary/30">
+                                    3 Pre-approved
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Score Input Factors -->
+                <section
+                    class="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-icons-round text-primary">analytics</span>
+                        <h3 class="text-slate-900 dark:text-slate-100 text-lg md:text-xl font-bold">Score Input Factors
+                        </h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Row 1 -->
+                        <div
+                            class="flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 px-5 py-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-sm font-medium text-slate-500">IoT Sensor Data Quality</span>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-200 text-sm">95%</span>
+                                <span class="material-icons-round text-primary text-sm">check_circle</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 px-5 py-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-sm font-medium text-slate-500">Asset Value</span>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-200 text-sm">KES 850,000</span>
+                                <span class="material-icons-round text-primary text-sm">check_circle</span>
+                            </div>
+                        </div>
+
+                        <!-- Row 2 -->
+                        <div
+                            class="flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 px-5 py-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-sm font-medium text-slate-500">Previous Loans (Formal)</span>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-200 text-sm">2 loans -
+                                    Repaid</span>
+                                <span class="material-icons-round text-primary text-sm">check_circle</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 px-5 py-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-sm font-medium text-slate-500">Previous Loans (Informal)</span>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-200 text-sm">1 - Pending</span>
+                                <span class="material-icons-round text-accent text-sm">warning</span>
+                            </div>
+                        </div>
+
+                        <!-- Row 3 -->
+                        <div
+                            class="flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 px-5 py-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-sm font-medium text-slate-500">Land Acreage</span>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-200 text-sm">5.2 ha</span>
+                                <span class="material-icons-round text-primary text-sm">check_circle</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 px-5 py-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-sm font-medium text-slate-500">Family Size</span>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-200 text-sm">6 members</span>
+                                <span class="material-icons-round text-accent text-sm">warning</span>
+                            </div>
+                        </div>
+
+                        <!-- Row 4 -->
+                        <div
+                            class="flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 px-5 py-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <span class="text-sm font-medium text-slate-500">Yield History (3 years)</span>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-slate-800 dark:text-slate-200 text-sm">4.2 tons/ha
+                                    avg</span>
+                                <span class="material-icons-round text-primary text-sm">check_circle</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Qualified Banks & Insurance Providers Table -->
+                <section
+                    class="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="material-icons-round text-primary">account_balance</span>
+                        <h3 class="text-slate-900 dark:text-slate-100 text-lg md:text-xl font-bold">Qualified Banks
+                            &amp; Insurance Providers</h3>
+                    </div>
+
+                    <div class="overflow-x-auto pb-4">
+                        <table class="w-full text-left whitespace-nowrap border-collapse min-w-[800px]">
+                            <tbody>
+                                <!-- Bank 1 -->
+                                <tr
+                                    class="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                    <td class="py-5 pr-4">
+                                        <div class="flex items-center gap-4">
+                                            <div
+                                                class="w-12 h-12 bg-background-light dark:bg-slate-800 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700">
+                                                <span
+                                                    class="material-icons-round text-primary text-xl">account_balance</span>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-slate-900 dark:text-slate-100 text-[15px]">
+                                                    Kenya Commercial Bank</h4>
+                                                <p class="text-[13px] text-slate-500">Bank</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px]">
+                                        <div
+                                            class="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold">
+                                            <span
+                                                class="material-icons-round text-slate-400 text-[16px]">credit_card</span>
+                                            KES 500,000
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px] text-slate-600 dark:text-slate-400 font-medium">
+                                        14%
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px] text-slate-600 dark:text-slate-400 font-medium">
+                                        24 months
+                                    </td>
+                                    <td class="pl-4 py-5 text-right w-32">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-secondary/30 text-primary border border-secondary/50">
+                                            Pre-approved
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Bank 2 -->
+                                <tr
+                                    class="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                    <td class="py-5 pr-4">
+                                        <div class="flex items-center gap-4">
+                                            <div
+                                                class="w-12 h-12 bg-background-light dark:bg-slate-800 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700">
+                                                <span class="material-icons-round text-primary text-xl">food_bank</span>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-slate-900 dark:text-slate-100 text-[15px]">
+                                                    Equity Bank</h4>
+                                                <p class="text-[13px] text-slate-500">Bank</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px]">
+                                        <div
+                                            class="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold">
+                                            <span
+                                                class="material-icons-round text-slate-400 text-[16px]">credit_card</span>
+                                            KES 450,000
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px] text-slate-600 dark:text-slate-400 font-medium">
+                                        15%
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px] text-slate-600 dark:text-slate-400 font-medium">
+                                        18 months
+                                    </td>
+                                    <td class="pl-4 py-5 text-right w-32">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                                            Eligible
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Bank 3 -->
+                                <tr
+                                    class="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                    <td class="py-5 pr-4">
+                                        <div class="flex items-center gap-4">
+                                            <div
+                                                class="w-12 h-12 bg-background-light dark:bg-slate-800 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700">
+                                                <span
+                                                    class="material-icons-round text-primary text-xl">real_estate_agent</span>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-slate-900 dark:text-slate-100 text-[15px]">
+                                                    Apollo Agriculture</h4>
+                                                <p class="text-[13px] text-slate-500">Agri-Finance</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px]">
+                                        <div
+                                            class="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold">
+                                            <span
+                                                class="material-icons-round text-slate-400 text-[16px]">credit_card</span>
+                                            KES 200,000
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px] text-slate-600 dark:text-slate-400 font-medium">
+                                        12%
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px] text-slate-600 dark:text-slate-400 font-medium">
+                                        12 months
+                                    </td>
+                                    <td class="pl-4 py-5 text-right w-32">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-secondary/30 text-primary border border-secondary/50">
+                                            Pre-approved
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Insurance 1 -->
+                                <tr
+                                    class="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                    <td class="py-5 pr-4">
+                                        <div class="flex items-center gap-4">
+                                            <div
+                                                class="w-12 h-12 bg-background-light dark:bg-slate-800 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700">
+                                                <span class="material-icons-round text-primary text-xl">shield</span>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-slate-900 dark:text-slate-100 text-[15px]">APA
+                                                    Insurance</h4>
+                                                <p class="text-[13px] text-slate-500">Insurance</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px]">
+                                        <div
+                                            class="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold">
+                                            <span
+                                                class="material-icons-round text-slate-400 text-[16px]">credit_card</span>
+                                            Crop Insurance
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px] text-slate-600 dark:text-slate-400 font-medium">
+                                        5% premium
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px] text-slate-600 dark:text-slate-400 font-medium">
+                                        Season
+                                    </td>
+                                    <td class="pl-4 py-5 text-right w-32">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                                            Eligible
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <!-- Insurance 2 -->
+                                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                    <td class="py-5 pr-4">
+                                        <div class="flex items-center gap-4">
+                                            <div
+                                                class="w-12 h-12 bg-background-light dark:bg-slate-800 rounded-xl flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700">
+                                                <span class="material-icons-round text-primary text-xl">shield</span>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-slate-900 dark:text-slate-100 text-[15px]">
+                                                    ACRE Africa</h4>
+                                                <p class="text-[13px] text-slate-500">Insurance</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px]">
+                                        <div
+                                            class="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-bold">
+                                            <span
+                                                class="material-icons-round text-slate-400 text-[16px]">credit_card</span>
+                                            Weather Index
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px] text-slate-600 dark:text-slate-400 font-medium">
+                                        3% premium
+                                    </td>
+                                    <td class="px-4 py-5 text-[14px] text-slate-600 dark:text-slate-400 font-medium">
+                                        Season
+                                    </td>
+                                    <td class="pl-4 py-5 text-right w-32">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-secondary/30 text-primary border border-secondary/50">
+                                            Pre-approved
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Bottom Navigation Bar -->
+            {% include 'bottom_nav.html' %}
+
+        </div>
+    </div>
+</body>
+
+</html>

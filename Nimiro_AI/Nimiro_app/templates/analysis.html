@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Nimiro AI - Analysis</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2D4F35",
+                        secondary: "#9BC53D",
+                        accent: "#FFB800",
+                        "background-light": "#F8F9FA",
+                        "background-dark": "#121212",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1E1E1E",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "16px",
+                    },
+                },
+            },
+        };
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased transition-colors duration-300">
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Desktop Sidebar -->
+        {% include 'sidebar.html' %}
+
+        <!-- Main Content Wrapper -->
+        <div class="flex flex-col flex-1 overflow-hidden relative">
+
+            <!-- Mobile Header & Desktop Topbar -->
+            <header
+                class="sticky top-0 z-40 bg-background-light/80 dark:bg-background-dark/80 ios-blur px-5 md:px-8 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
+                <div class="flex md:hidden items-center gap-3">
+                    <div class="bg-primary p-2 rounded-xl flex items-center justify-center text-white">
+                        <span class="material-icons-round text-xl">science</span>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold leading-tight tracking-tight text-primary dark:text-secondary">
+                            Analysis</h1>
+                    </div>
+                </div>
+
+                <div class="hidden md:block">
+                    <h2 class="text-xl font-bold dark:text-white">Farm Database & Analytics</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Deep insights into your soil, crops,
+                        and yield predictions.</p>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button
+                        class="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+                        onclick="toggleDarkMode()">
+                        <span class="material-icons-round">contrast</span>
+                    </button>
+                    <!-- Download Report Button -->
+                    <button
+                        class="px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl font-medium transition-colors hidden md:flex items-center gap-2">
+                        <span class="material-icons-round text-sm">download</span>
+                        Export PDF
+                    </button>
+                    <button
+                        class="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        <span class="material-icons-round">download</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main scrollable content -->
+            <main
+                class="flex-1 overflow-y-auto p-5 md:p-8 space-y-6 pb-28 md:pb-8 no-scrollbar bg-white dark:bg-background-dark lg:bg-transparent lg:dark:bg-transparent">
+
+                <div class="max-w-6xl mx-auto space-y-6">
+
+                    <!-- High-level Metric CardsRow -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div
+                            class="bg-card-light dark:bg-card-dark p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                            <div class="flex items-center gap-2 mb-2 text-slate-500 dark:text-slate-400">
+                                <span class="material-icons-round text-sm">assessment</span>
+                                <p class="text-[10px] font-bold uppercase tracking-wider">Overall Health</p>
+                            </div>
+                            <div class="flex items-end justify-between">
+                                <p class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">92%</p>
+                                <span
+                                    class="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-1.5 py-0.5 rounded-md flex items-center gap-0.5"><span
+                                        class="material-icons-round text-[10px]">trending_up</span>+3%</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-card-light dark:bg-card-dark p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                            <div class="flex items-center gap-2 mb-2 text-slate-500 dark:text-slate-400">
+                                <span class="material-icons-round text-sm">psychology</span>
+                                <p class="text-[10px] font-bold uppercase tracking-wider">AI Confidence</p>
+                            </div>
+                            <div class="flex items-end justify-between">
+                                <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">High</p>
+                                <span class="text-xs font-semibold text-slate-500">Based on 1.2M data pts</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-card-light dark:bg-card-dark p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                            <div class="flex items-center gap-2 mb-2 text-slate-500 dark:text-slate-400">
+                                <span class="material-icons-round text-sm">water_drop</span>
+                                <p class="text-[10px] font-bold uppercase tracking-wider">Water Efficiency</p>
+                            </div>
+                            <div class="flex items-end justify-between">
+                                <p class="text-2xl font-bold text-cyan-600 dark:text-cyan-400">85%</p>
+                                <span
+                                    class="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-1.5 py-0.5 rounded-md flex items-center gap-0.5"><span
+                                        class="material-icons-round text-[10px]">trending_up</span>+5%</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-card-light dark:bg-card-dark p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                            <div class="flex items-center gap-2 mb-2 text-slate-500 dark:text-slate-400">
+                                <span class="material-icons-round text-sm">park</span>
+                                <p class="text-[10px] font-bold uppercase tracking-wider">Yield Forecast</p>
+                            </div>
+                            <div class="flex items-end justify-between">
+                                <p class="text-2xl font-bold text-amber-600 dark:text-amber-400">4.5t <span
+                                        class="text-sm font-medium">/ha</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Split Section -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                        <!-- Soil Nutrient Analysis Chart -->
+                        <div
+                            class="lg:col-span-2 bg-card-light dark:bg-card-dark rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 flex flex-col">
+                            <div class="flex justify-between items-center mb-6">
+                                <div>
+                                    <h3 class="font-bold text-lg text-slate-800 dark:text-slate-100">Deep Soil Analysis
+                                    </h3>
+                                    <p class="text-xs text-slate-500">N-P-K & Micronutrients Profile</p>
+                                </div>
+                                <select
+                                    class="text-sm bg-slate-50 dark:bg-slate-800 border-none rounded-lg text-slate-700 dark:text-slate-300 font-medium py-1.5 focus:ring-0 cursor-pointer hidden md:block">
+                                    <option>Past 30 Days</option>
+                                    <option>Past 6 Months</option>
+                                </select>
+                            </div>
+                            <!-- Mock Bar Chart using HTML/CSS -->
+                            <div
+                                class="flex-1 flex items-end justify-between h-48 md:h-64 px-2 pb-6 pt-8 border-b border-slate-100 dark:border-slate-800 relative">
+                                <!-- Horizontal Grid Lines -->
+                                <div
+                                    class="absolute inset-x-0 bottom-[20%] border-b border-dashed border-slate-200 dark:border-slate-700 w-full z-0">
+                                </div>
+                                <div
+                                    class="absolute inset-x-0 bottom-[50%] border-b border-dashed border-slate-200 dark:border-slate-700 w-full z-0">
+                                </div>
+                                <div
+                                    class="absolute inset-x-0 bottom-[80%] border-b border-dashed border-slate-200 dark:border-slate-700 w-full z-0">
+                                </div>
+
+                                <!-- Nitrogen -->
+                                <div
+                                    class="relative w-12 md:w-16 h-full flex items-end justify-center group z-10 text-center">
+                                    <div
+                                        class="absolute -top-6 text-xs font-bold text-slate-700 dark:text-slate-300 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                        45 mg</div>
+                                    <div
+                                        class="w-8 md:w-12 bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-t-sm h-[65%] hover:opacity-80 transition-opacity cursor-pointer shadow-sm">
+                                    </div>
+                                    <p class="absolute -bottom-6 text-xs text-slate-500 font-bold w-full text-center">N
+                                    </p>
+                                </div>
+                                <!-- Phosphorus -->
+                                <div
+                                    class="relative w-12 md:w-16 h-full flex items-end justify-center group z-10 text-center">
+                                    <div
+                                        class="absolute -top-6 text-xs font-bold text-slate-700 dark:text-slate-300 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                        32 mg</div>
+                                    <div
+                                        class="w-8 md:w-12 bg-gradient-to-t from-amber-500 to-amber-300 rounded-t-sm h-[40%] hover:opacity-80 transition-opacity cursor-pointer shadow-sm">
+                                    </div>
+                                    <p class="absolute -bottom-6 text-xs text-slate-500 font-bold w-full text-center">P
+                                    </p>
+                                </div>
+                                <!-- Potassium -->
+                                <div
+                                    class="relative w-12 md:w-16 h-full flex items-end justify-center group z-10 text-center">
+                                    <div
+                                        class="absolute -top-6 text-xs font-bold text-slate-700 dark:text-slate-300 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                        180 mg</div>
+                                    <div
+                                        class="w-8 md:w-12 bg-gradient-to-t from-red-500 to-red-400 rounded-t-sm h-[85%] hover:opacity-80 transition-opacity cursor-pointer shadow-sm">
+                                    </div>
+                                    <p class="absolute -bottom-6 text-xs text-slate-500 font-bold w-full text-center">K
+                                    </p>
+                                </div>
+                                <!-- Calcium -->
+                                <div
+                                    class="relative w-12 md:w-16 h-full flex items-end justify-center group z-10 text-center hidden sm:flex">
+                                    <div
+                                        class="absolute -top-6 text-xs font-bold text-slate-700 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                        120 mg</div>
+                                    <div
+                                        class="w-8 md:w-12 bg-gradient-to-t from-cyan-500 to-cyan-300 rounded-t-sm h-[55%] hover:opacity-80 transition-opacity cursor-pointer shadow-sm">
+                                    </div>
+                                    <p class="absolute -bottom-6 text-xs text-slate-500 font-bold w-full text-center">Ca
+                                    </p>
+                                </div>
+                                <!-- Magnesium -->
+                                <div
+                                    class="relative w-12 md:w-16 h-full flex items-end justify-center group z-10 text-center hidden sm:flex">
+                                    <div
+                                        class="absolute -top-6 text-xs font-bold text-slate-700 dark:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                        45 mg</div>
+                                    <div
+                                        class="w-8 md:w-12 bg-gradient-to-t from-indigo-500 to-indigo-400 rounded-t-sm h-[45%] hover:opacity-80 transition-opacity cursor-pointer shadow-sm">
+                                    </div>
+                                    <p class="absolute -bottom-6 text-xs text-slate-500 font-bold w-full text-center">Mg
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-8 grid grid-cols-2 gap-4">
+                                <div
+                                    class="bg-indigo-50/50 dark:bg-indigo-900/10 p-4 rounded-xl border border-indigo-100 dark:border-indigo-900/30">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="material-icons-round text-indigo-500 text-sm">science</span>
+                                        <p
+                                            class="text-xs font-bold text-indigo-900 dark:text-indigo-400 uppercase tracking-widest">
+                                            pH Level</p>
+                                    </div>
+                                    <p class="text-xl font-bold text-slate-800 dark:text-slate-100">6.2 <span
+                                            class="text-sm font-medium text-indigo-500">Optimal</span></p>
+                                </div>
+                                <div
+                                    class="bg-amber-50/50 dark:bg-amber-900/10 p-4 rounded-xl border border-amber-100 dark:border-amber-900/30">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="material-icons-round text-amber-500 text-sm">compost</span>
+                                        <p
+                                            class="text-xs font-bold text-amber-900 dark:text-amber-400 uppercase tracking-widest">
+                                            Organic Matter</p>
+                                    </div>
+                                    <p class="text-xl font-bold text-slate-800 dark:text-slate-100">4.1% <span
+                                            class="text-sm font-medium text-amber-600">Good</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actionable AI Insights -->
+                        <div
+                            class="lg:col-span-1 bg-card-light dark:bg-card-dark rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 flex flex-col min-h-[400px]">
+                            <div
+                                class="flex items-center gap-2 mb-6 border-b border-slate-100 dark:border-slate-800 pb-4">
+                                <div class="bg-primary/20 text-primary p-2 rounded-lg">
+                                    <span class="material-icons-round">smart_toy</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-slate-800 dark:text-slate-100">AI Analyst Report
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="flex-1 space-y-4 overflow-y-auto no-scrollbar pr-1 -mr-1">
+
+                                <div
+                                    class="p-4 border border-amber-200 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-900/10 rounded-2xl relative shadow-sm">
+                                    <span
+                                        class="absolute top-3 right-3 flex h-2.5 w-2.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100 mb-1">Phosphorus
+                                        Deficiency</h4>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Levels have
+                                        dropped below 35mg in Plot A. Apply diammonium phosphate (DAP) before the next
+                                        rainy cycle.</p>
+                                    <button
+                                        class="text-xs font-bold text-amber-700 dark:text-amber-500 mt-2 hover:underline inline-flex items-center gap-1">View
+                                        Fertilizer Guide <span
+                                            class="material-icons-round text-[14px]">arrow_forward</span></button>
+                                </div>
+
+                                <div class="p-4 border border-primary/20 bg-primary/5 rounded-2xl shadow-sm">
+                                    <div class="flex items-center gap-1.5 mb-1.5">
+                                        <span class="material-icons-round text-primary text-sm">check_circle</span>
+                                        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100">Watering
+                                            Schedule Optimal</h4>
+                                    </div>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Soil moisture
+                                        is at a stable 42%. Based on the 3-day forecast, you can suspend drip irrigation
+                                        until Thursday.</p>
+                                </div>
+
+                                <div
+                                    class="p-4 border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/10 rounded-2xl shadow-sm">
+                                    <div class="flex items-center gap-1.5 mb-1.5">
+                                        <span class="material-icons-round text-blue-500 text-sm">info</span>
+                                        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100">Pest Risk: Low
+                                        </h4>
+                                    </div>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Temperature
+                                        and humidity models suggest a low probability of stalk borer infestation this
+                                        week.</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Yield Projection -->
+                    <div
+                        class="bg-card-light dark:bg-card-dark rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 overflow-hidden">
+                        <h3 class="font-bold text-lg text-slate-800 dark:text-slate-100 mb-6">Estimated Crop Yield
+                            Trajectory</h3>
+                        <div class="flex flex-col md:flex-row items-center gap-6">
+                            <!-- Visual Progress / Trajectory mock -->
+                            <div
+                                class="flex-1 w-full bg-slate-50 dark:bg-slate-900 rounded-2xl p-6 md:px-8 border border-slate-100 dark:border-slate-800 flex items-center justify-between shadow-inner">
+                                <div class="text-center group">
+                                    <div
+                                        class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center mx-auto mb-2 border-2 border-emerald-500 transition-transform hover:scale-105">
+                                        <span class="material-icons-round">eco</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs font-bold uppercase text-slate-500">Planting</p>
+                                    <p class="text-xs font-medium text-slate-800 dark:text-slate-200">Mar 1</p>
+                                </div>
+                                <div
+                                    class="flex-1 h-1.5 bg-emerald-200 dark:bg-emerald-900/50 mx-2 md:mx-4 rounded-full overflow-hidden">
+                                    <div class="w-full h-full bg-emerald-500"></div>
+                                </div>
+                                <div class="text-center group relative">
+                                    <div
+                                        class="absolute -top-8 left-1/2 -transform -translate-x-1/2 bg-slate-800 text-white text-[10px] font-bold px-2 py-1 rounded-md hidden md:block whitespace-nowrap shadow-md">
+                                        Today</div>
+                                    <div
+                                        class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center mx-auto mb-2 border-2 border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-transform hover:scale-105">
+                                        <span class="material-icons-round">grass</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs font-bold uppercase text-slate-500">Vegetative</p>
+                                    <p class="text-xs font-bold text-emerald-600 dark:text-emerald-400">Current</p>
+                                </div>
+                                <div
+                                    class="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700 mx-2 md:mx-4 rounded-full overflow-hidden">
+                                    <div class="w-[45%] h-full bg-emerald-500"></div>
+                                    <!-- Blinking dot for progress -->
+                                    <div class="relative w-full h-full">
+                                        <div
+                                            class="absolute left-[45%] top-1/2 -translate-y-1/2 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white dark:border-slate-800 shadow-sm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center group opacity-50 transition-opacity hover:opacity-100">
+                                    <div
+                                        class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white dark:bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-2 border-2 border-slate-200 dark:border-slate-700">
+                                        <span class="material-icons-round">local_florist</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs font-bold uppercase text-slate-500">Flowering</p>
+                                    <p class="text-xs font-medium text-slate-800 dark:text-slate-200">May 15</p>
+                                </div>
+                                <div
+                                    class="flex-1 h-1 bg-slate-200 dark:bg-slate-700 mx-2 md:mx-4 rounded-full hidden sm:block">
+                                </div>
+                                <div
+                                    class="text-center group opacity-50 transition-opacity hover:opacity-100 hidden sm:block">
+                                    <div
+                                        class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white dark:bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-2 border-2 border-slate-200 dark:border-slate-700">
+                                        <span class="material-icons-round">agriculture</span>
+                                    </div>
+                                    <p class="text-[10px] md:text-xs font-bold uppercase text-slate-500">Harvest</p>
+                                    <p class="text-xs font-medium text-slate-800 dark:text-slate-200">Jul 20</p>
+                                </div>
+                            </div>
+
+                            <!-- Stat Summary -->
+                            <div
+                                class="w-full md:w-[280px] shrink-0 bg-primary/95 text-white p-6 rounded-2xl shadow-xl shadow-primary/30 relative overflow-hidden">
+                                <!-- Background pattern for flair -->
+                                <span
+                                    class="material-icons-round absolute -right-6 -bottom-6 text-[120px] text-white opacity-10 rotate-12 pointer-events-none">analytics</span>
+
+                                <div class="relative z-10">
+                                    <p class="text-[11px] font-bold text-white/90 uppercase tracking-widest mb-1">
+                                        Predicted Yield</p>
+                                    <div class="flex items-baseline gap-2 mb-1">
+                                        <span class="text-5xl font-black tracking-tight">4.5</span>
+                                        <span class="text-lg font-bold opacity-90">tons/ha</span>
+                                    </div>
+                                    <p class="text-xs text-white/80 font-medium mb-5 inline-flex items-center gap-1">
+                                        <span class="material-icons-round text-[14px]">arrow_upward</span> 10% above
+                                        regional avg
+                                    </p>
+
+                                    <button
+                                        class="w-full bg-white text-primary font-bold py-3 rounded-xl hover:bg-slate-50 transition-colors shadow-md flex justify-center items-center gap-2 group">
+                                        View Comparison
+                                        <span
+                                            class="material-icons-round text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+
+            <!-- Mobile Bottom Nav -->
+            {% include 'bottom_nav.html' %}
+        </div>
+    </div>
+</body>
+
+</html>

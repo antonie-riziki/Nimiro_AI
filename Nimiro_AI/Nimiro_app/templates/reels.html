@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Reels</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2D4F35", // Deep Earthy Green
+                        secondary: "#9BC53D", // Fresh Leaf Green
+                        accent: "#FFB800", // Sun Gold
+                        "background-light": "#F8F9FA",
+                        "background-dark": "#121212",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1E1E1E",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "16px",
+                    },
+                },
+            },
+        };
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+
+<body class="bg-black font-body antialiased overflow-hidden h-screen flex flex-col">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Desktop Sidebar -->
+        {% include 'sidebar.html' %}
+
+
+        <!-- Mobile Container (Simulating iOS Phone Frame) -->
+        <div class="relative mx-auto h-screen max-w-[430px] bg-black flex flex-col shadow-2xl overflow-hidden">
+            <!-- Header Overlay -->
+            <div class="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-6 pt-12">
+                <!-- <h1 class="text-white text-xl font-extrabold tracking-tight">Nimiro AI</h1> -->
+                <div class="flex gap-4">
+                    <button class="text-white bg-black/20 p-2 rounded-full backdrop-blur-md">
+                        <span class="material-icons-round">search</span>
+                    </button>
+                    <button class="text-white bg-black/20 p-2 rounded-full backdrop-blur-md">
+                        <span class="material-icons-round">more_horiz</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scroll Container -->
+            <div class="h-screen overflow-y-scroll snap-y snap-mandatory">
+
+                {% for reel in reels %}
+
+                <!-- Each Reel = Full Screen -->
+                <div class="relative h-screen w-full snap-start bg-slate-900 flex items-center justify-center">
+
+                    <!-- Video -->
+
+                    <div class="relative w-full aspect-[9/16] mb-6 rounded-xl overflow-hidden">
+
+                        <video class="w-full h-full object-cover" src="{{ reel.video_url }}" autoplay muted loop
+                            playsinline>
+                        </video>
+
+                        <div
+                            class="absolute bottom-0 p-4 text-white bg-gradient-to-t from-black/60 to-transparent w-full">
+                            <p class="text-sm font-semibold">{{ reel.creator }}</p>
+                            <p class="text-xs opacity-80">Duration: {{ reel.duration }}s</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Sidebar -->
+                    <div class="absolute right-4 bottom-32 z-10 flex flex-col items-center gap-6">
+
+                        <button class="flex flex-col items-center gap-1">
+                            <div class="bg-black/20 backdrop-blur-md p-3 rounded-full text-white">
+                                <span class="material-icons-round text-3xl">favorite</span>
+                            </div>
+                            <span class="text-white text-xs font-bold drop-shadow-md">
+                                {{ reel.likes }}
+                            </span>
+                        </button>
+
+                        <button class="flex flex-col items-center gap-1">
+                            <div class="bg-black/20 backdrop-blur-md p-3 rounded-full text-white">
+                                <span class="material-icons-round text-3xl">chat_bubble</span>
+                            </div>
+                            <span class="text-white text-xs font-bold drop-shadow-md">
+                                {{ reel.comments }}
+                            </span>
+                        </button>
+
+                        <button class="flex flex-col items-center gap-1">
+                            <div class="bg-black/20 backdrop-blur-md p-3 rounded-full text-white">
+                                <span class="material-icons-round text-3xl">share</span>
+                            </div>
+                            <span class="text-white text-xs font-bold drop-shadow-md">
+                                {{ reel.shares }}
+                            </span>
+                        </button>
+
+                    </div>
+
+                    <!-- Bottom Info -->
+                    <div class="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
+
+                        <h3 class="text-white font-bold text-lg mb-1">
+                            @{{ reel.creator }}
+                        </h3>
+
+                        <p class="text-white/90 text-sm mb-3">
+                            {{ reel.summary }}
+                        </p>
+
+                        <div class="flex flex-wrap gap-2">
+                            {% for tag in reel.hashtags %}
+                            <span class="px-2 py-1 bg-white/10 rounded-lg text-white/80 text-[11px]">
+                                #{{ tag }}
+                            </span>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- BottomNavBar -->
+            {% include 'bottom_nav.html' %}
+
+        </div>
+</body>
+
+</html>

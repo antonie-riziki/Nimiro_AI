@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Nimiro AI Profile</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2D4F35", // Deep Earthy Green
+                        secondary: "#9BC53D", // Fresh Leaf Green
+                        accent: "#FFB800", // Sun Gold
+                        "background-light": "#F8F9FA",
+                        "background-dark": "#121212",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1E1E1E",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "16px",
+                    },
+                },
+            },
+        };
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased transition-colors duration-300">
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Desktop Sidebar -->
+        {% include 'sidebar.html' %}
+
+        <!-- Main Content Wrapper -->
+        <div class="flex flex-col flex-1 overflow-hidden relative">
+
+            <!-- Mobile Header & Desktop Topbar -->
+            <header
+                class="sticky top-0 z-40 bg-background-light/80 dark:bg-background-dark/80 ios-blur px-5 md:px-8 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
+                <div class="flex md:hidden items-center gap-3">
+                    <div class="bg-primary p-2 rounded-xl flex items-center justify-center text-white">
+                        <span class="material-icons-round text-xl">person</span>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold leading-tight tracking-tight text-primary dark:text-secondary">
+                            Profile</h1>
+                    </div>
+                </div>
+
+                <div class="hidden md:block">
+                    <h2 class="text-xl font-bold dark:text-white">Profile Settings</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Manage your account and preferences.
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <!-- Dark mode toggle for mobile -->
+                    <button onclick="toggleDarkMode()"
+                        class="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        <span class="material-icons-round">contrast</span>
+                    </button>
+                    <!-- Mobile Hamburger -->
+                    <button
+                        class="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        <span class="material-icons-round">menu</span>
+                    </button>
+
+                    <div class="hidden md:flex items-center gap-3 ml-4">
+                        <button
+                            class="px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                            Cancel
+                        </button>
+                        <button
+                            class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-xl font-medium shadow-sm shadow-primary/20 transition-all">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main scrollable content -->
+            <main
+                class="flex-1 overflow-y-auto p-5 md:p-8 space-y-6 pb-32 md:pb-8 no-scrollbar bg-white dark:bg-card-dark lg:bg-transparent lg:dark:bg-transparent">
+
+                <div
+                    class="max-w-4xl mx-auto space-y-6 border-slate-100 dark:border-slate-800 md:bg-white md:dark:bg-card-dark md:rounded-3xl md:p-8 md:shadow-lg md:border">
+
+                    <!-- Profile Picture Section -->
+                    <section
+                        class="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+                        <div
+                            class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-4 border-slate-50 dark:border-slate-900 shadow-md">
+                            <img src="https://www.africanleadershipmagazine.co.uk/wp-content/uploads/2021/01/Kenya.jpg"
+                                alt="John Kamau" class="w-full h-full object-cover">
+                            <!-- Overlay edit icon -->
+                            <div
+                                class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 cursor-pointer transition-opacity">
+                                <span class="material-icons-round text-white font-bold">edit</span>
+                            </div>
+                        </div>
+                        <div class="flex-1 text-center sm:text-left">
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-slate-100">John Kamau</h3>
+                            <p class="text-slate-500 dark:text-slate-400 mt-1">Farm Owner • Joined 2024</p>
+                            <div class="mt-4 flex gap-3 justify-center sm:justify-start">
+                                <button
+                                    class="px-4 py-2 bg-primary/10 text-primary dark:bg-secondary/10 dark:text-secondary rounded-xl font-medium text-sm transition-colors hover:bg-primary/20 dark:hover:bg-secondary/20 block md:hidden">
+                                    Upload New Picture
+                                </button>
+                                <button
+                                    class="px-4 py-2 bg-primary text-white rounded-xl font-medium text-sm transition-colors shadow-sm shadow-primary/20 hidden md:block">
+                                    Upload New Picture
+                                </button>
+                                <button
+                                    class="px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-red-50 hover:text-red-500 hover:border-red-200 dark:hover:bg-red-900/20 dark:hover:text-red-400 dark:hover:border-red-900/30 rounded-xl font-medium text-sm transition-all hidden md:block">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Profile Information Edit -->
+                    <section class="space-y-4">
+                        <h4 class="font-bold text-lg text-slate-800 dark:text-slate-100">Personal Information</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label
+                                    class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Full
+                                    Name</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="material-icons-round text-slate-400 text-[20px]">person</span>
+                                    </div>
+                                    <input type="text"
+                                        class="w-full pl-10 pr-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:ring-primary focus:border-primary transition-colors"
+                                        value="John Kamau">
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <label
+                                    class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Email
+                                    Address</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="material-icons-round text-slate-400 text-[20px]">email</span>
+                                    </div>
+                                    <input type="email"
+                                        class="w-full pl-10 pr-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:ring-primary focus:border-primary transition-colors"
+                                        value="johnkamau@gmail.com">
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <label
+                                    class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Phone
+                                    Number</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="material-icons-round text-slate-400 text-[20px]">phone</span>
+                                    </div>
+                                    <input type="tel"
+                                        class="w-full pl-10 pr-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:ring-primary focus:border-primary transition-colors"
+                                        value="+254 700 000 000">
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <label
+                                    class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Location</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="material-icons-round text-slate-400 text-[20px]">location_on</span>
+                                    </div>
+                                    <input type="text"
+                                        class="w-full pl-10 pr-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:ring-primary focus:border-primary transition-colors"
+                                        value="Nairobi, Kenya">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <hr class="border-slate-200 dark:border-slate-800">
+
+                    <!-- Farm Details section -->
+                    <section class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-lg text-slate-800 dark:text-slate-100">Farm Details</h4>
+                            <span
+                                class="px-3 py-1 bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400 rounded-full text-xs font-bold border border-green-200 dark:border-green-800">Verified</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div
+                                class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/20 text-green-600 flex items-center justify-center shrink-0">
+                                    <span class="material-icons-round">square_foot</span>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Total
+                                        Acreage</p>
+                                    <p class="font-bold text-slate-900 dark:text-slate-100">12.4 Acres</p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center shrink-0">
+                                    <span class="material-icons-round">grass</span>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Primary
+                                        Crop</p>
+                                    <p class="font-bold text-slate-900 dark:text-slate-100">Maize, Wheat</p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center gap-3 sm:col-span-2 lg:col-span-1">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 flex items-center justify-center shrink-0">
+                                    <span class="material-icons-round">water_drop</span>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">
+                                        Irrigation</p>
+                                    <p class="font-bold text-slate-900 dark:text-slate-100">Drip System</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <hr class="border-slate-200 dark:border-slate-800">
+
+                    <!-- Settings Toggles -->
+                    <section class="space-y-4">
+                        <h4 class="font-bold text-lg text-slate-800 dark:text-slate-100">Preferences</h4>
+                        <div class="space-y-3">
+                            <label
+                                class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-primary/50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-slate-600 dark:text-slate-400">
+                                        <span class="material-icons-round text-lg">notifications_active</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-slate-900 dark:text-slate-100 text-sm">Push
+                                            Notifications</p>
+                                        <p class="text-xs text-slate-500 mt-0.5">Receive alerts for weather drops and
+                                            market changes.</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="relative w-11 h-6 bg-primary rounded-full transition-colors flex items-center shrink-0">
+                                    <div
+                                        class="absolute left-1 transform translate-x-5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform">
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label
+                                class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer hover:border-primary/50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center text-slate-600 dark:text-slate-400">
+                                        <span class="material-icons-round text-lg">language</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-slate-900 dark:text-slate-100 text-sm">Language</p>
+                                        <p class="text-xs text-slate-500 mt-0.5">English (US)</p>
+                                    </div>
+                                </div>
+                                <span class="material-icons-round text-slate-400">chevron_right</span>
+                            </label>
+                        </div>
+                    </section>
+
+                    <!-- Logout Button (Mobile primary, desktop secondary) -->
+                    <div class="pt-6 md:pt-0">
+                        <a href="{% url 'auth-page' %}"
+                            class="w-full md:w-auto md:px-6 flex items-center justify-center gap-2 py-3 bg-red-50 text-red-600 dark:bg-red-900/10 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/20 rounded-xl font-bold transition-colors">
+                            <span class="material-icons-round">logout</span>
+                            <span>Sign Out</span>
+                        </a>
+                        <button
+                            class="md:hidden w-full flex items-center justify-center gap-2 py-3 mt-3 bg-primary text-white rounded-xl font-bold shadow-sm shadow-primary/20">
+                            Save Changes
+                        </button>
+                    </div>
+
+                </div>
+            </main>
+
+            <!-- Mobile Bottom Nav -->
+            {% include 'bottom_nav.html' %}
+        </div>
+    </div>
+</body>
+
+</html>
